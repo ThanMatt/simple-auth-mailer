@@ -1,22 +1,19 @@
-import express from 'express'
+import express, { Response, Request } from 'express'
 import cors from 'cors'
-import mongoose from 'mongoose'
+import { router as AuthRoutes } from './routes/AuthRoutes'
 
 const app = express()
 
-app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
 
 app.use(cors())
 
-mongoose.connect(process.env.MONGO_URL || 'mongodb://db:27017/mauch_bot', {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  reconnectTries: 30,
-  reconnectInterval: 500
+app.listen('5000', () => {
+  console.log('Auth Mailer online')
 })
 
-mongoose.connection.once('open', () => {
-  console.log('MongoDB connection: success')
+app.get('/', (_, res: Response) => {
+  return res.status(200).send({ message: 'OK!' })
 })
 
-console.log('boo')
+app.use('/auth', AuthRoutes)

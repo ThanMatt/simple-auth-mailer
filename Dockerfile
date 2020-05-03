@@ -1,6 +1,6 @@
-FROM node:12
+FROM node:13-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/services/mailer
 
 COPY package.json .
 
@@ -16,4 +16,6 @@ RUN yarn global add ts-node
 
 COPY . .
 
-EXPOSE 4000
+EXPOSE 5000
+
+ENTRYPOINT [ "yarn", "run", "start:dev" ]
