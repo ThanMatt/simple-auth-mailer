@@ -36,4 +36,19 @@ router.post(
   }
 )
 
+router.post(
+  '/forgot-password',
+  (req: RequestBody, res: Response): Response => {
+    const { email, token } = req.body
+
+    if (email && token) {
+      console.log(email, token)
+
+      return res.status(200).send({ message: 'Forgot password mailer sent' })
+    }
+
+    return res.status(422).send({ message: 'No email or token was provided' })
+  }
+)
+
 export { router }
